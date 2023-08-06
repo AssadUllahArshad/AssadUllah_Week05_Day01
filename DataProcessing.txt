@@ -1,0 +1,9 @@
+from sklearn.preprocessing import MinMaxScaler
+# Select the columns to scale (e.g., Age, AnnualIncome, TotalPurchases)
+columns_to_scale = ['Age', 'AnnualIncome (USD)', 'TotalPurchases']
+
+# Initialize the MinMaxScaler
+scaler = MinMaxScaler()
+
+# Apply Min-Max Scaling to selected columns
+data[columns_to_scale] = scaler.fit_transform(data[columns_to_scale])
