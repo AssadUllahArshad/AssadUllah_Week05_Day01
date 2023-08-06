@@ -1,0 +1,52 @@
+import pandas as pd
+import random
+# Function to generate random gender
+def generate_random_gender():
+    return random.choice(['Male', 'Female'])
+
+# Function to generate random marital status
+def generate_random_marital_status():
+    return random.choice(['Married', 'Single', 'Divorced', 'Widowed'])
+
+# Function to generate random annual income between 30000 and 120000 USD
+def generate_random_annual_income():
+    return random.randint(15000, 10000000)
+
+# Function to generate random total purchases between 5 and 50
+def generate_random_total_purchases():
+    return random.randint(1, 100)
+
+# Function to generate random preferred category
+def generate_random_preferred_category():
+    return random.choice(['Electronics', 'Appliances', 'Fashion', 'Books'])
+
+# Generate data for the remaining 495 customers
+num_remaining_customers = 495
+remaining_data = []
+for customer_id in range(1006, 1006 + num_remaining_customers):
+    age = random.randint(18, 65)  # Random age between 18 and 65
+    gender = generate_random_gender()
+    marital_status = generate_random_marital_status()
+    annual_income = generate_random_annual_income()
+    total_purchases = generate_random_total_purchases()
+    preferred_category = generate_random_preferred_category()
+
+    remaining_data.append([customer_id, age, gender, marital_status, annual_income, total_purchases, preferred_category])
+
+# Combine the data for all customers (original 5 + remaining 495)
+all_customers_data = [
+    [1001, 33, 'Male', 'Married', 65000, 18, 'Electronics'],
+    [1002, 28, 'Female', 'Single', 45000, 15, 'Appliances'],
+    [1003, 42, 'Male', 'Single', 55000, 20, 'Electronics'],
+    [1004, 51, 'Female', 'Married', 80000, 12, 'Electronics'],
+    [1005, 37, 'Male', 'Divorced', 58000, 10, 'Appliances'],
+] + remaining_data
+
+# Convert the data to a Pandas DataFrame
+columns = ['CustomerID', 'Age', 'Gender', 'MaritalStatus', 'AnnualIncome (USD)', 'TotalPurchases', 'PreferredCategory']
+df = pd.DataFrame(all_customers_data, columns=columns)
+
+# Save the dataset to a CSV file
+df.to_csv('TechElectro_Customer_Data.csv', index=False)
+
+data = pd.read_csv("/content/TechElectro_Customer_Data.csv")
