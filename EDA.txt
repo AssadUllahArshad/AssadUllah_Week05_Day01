@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#visualise distribution of Age by Gender
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Gender', y='Age', data=data)
+plt.title('Distribution of Age by Gender')
+plt.xlabel('Gender')
+plt.ylabel('Age')
+plt.show()
+
+#visualise anuualincome
+plt.figure(figsize=(10, 6))
+plt.hist(data['AnnualIncome (USD)'], edgecolor='black')
+plt.title('Distribution of AnnualIncome (USD)')
+plt.xlabel('AnnualIncome (USD)')
+plt.ylabel('Count')
+plt.show()
+
+#visualising gender distribution
+plt.figure(figsize=(8, 6))
+sns.countplot(x='Gender', data=df, palette='Set2')
+plt.title('Gender Distribution')
+plt.xlabel('Gender')
+plt.ylabel('Count')
+plt.show()
+
+#visualie preffered category
+plt.figure(figsize=(10, 6))
+sns.countplot(x='PreferredCategory', data=df, palette='pastel')
+plt.title('Preferred Category Distribution')
+plt.xlabel('Preferred Category')
+plt.ylabel('Count')
+plt.show()
+
+# Correlation heatmap for numerical variables
+plt.figure(figsize=(10, 8))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Heatmap')
+plt.show()
