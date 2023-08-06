@@ -1,0 +1,54 @@
+!pip install dash
+!pip install dash pandas plotly
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import pandas as pd
+import plotly.express as px
+
+# Create a Dash app
+app = dash.Dash("TechElectro")
+
+# Define the layout of the dashboard
+app.layout = html.Div([
+    html.H1('Customer Segmentation Dashboard'),
+
+    # Dropdown to select customer segments based on PreferredCategory
+    dcc.Dropdown(
+        id='customer-segment-dropdown',
+        options=[
+            {'label': category, 'value': category} for category in data['PreferredCategory'].unique()
+        ],
+        value=data['PreferredCategory'].unique()[0],  # Default selected segment
+    ),
+
+    # Bar chart for PreferredCategory vs. TotalPurchases
+    dcc.Graph(id='bar-preferredcategory-purchases'),
+
+    # Bar chart for MaritalStatus vs. TotalPurchases
+    dcc.Graph(id='bar-maritalstatus-purchases'),
+])
+
+
+# Define a callback to update the PreferredCategory vs. TotalPurchases bar chart
+@app.callback(
+    dash.dependencies.Output('bar-preferredcategory-purchases', 'figure'),
+    [dash.dependencies.Input('customer-segment-dropdown', 'value')]
+)
+def update_bar_preferred_category(selected_category):
+    grouped_df = data.groupby('PreferredCategory', as_index=False)['TotalPurchases'].sum()
+    figure = px.bar(grouped_df, x='PreferredCategory', y='TotalPurchases', title='Preferred Category vs. Total Purchases')
+    return figure
+
+# Define a callback to update the MaritalStatus vs. TotalPurchases bar chart
+@app.callback(
+    dash.dependencies.Output('bar-maritalstatus-purchases', 'figure'),
+    [dash.dependencies.Input('customer-segment-dropdown', 'value')]
+)
+def update_bar_marital_status(selected_category):
+    grouped_df = data.groupby('MaritalStatus', as_index=False)['TotalPurchases'].sum()
+    figure = px.bar(grouped_df, x='MaritalStatus', y='TotalPurchases', title='Marital Status vs. Total Purchases')
+    return figure
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
