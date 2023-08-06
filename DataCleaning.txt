@@ -1,0 +1,12 @@
+data.info()
+
+data.isna().sum()
+
+#check for duplicates
+duplicates = data[data.duplicated(keep=False)]
+
+if not duplicates.empty:
+    print("Duplicate rows found:")
+    print(duplicates)
+else:
+    print("No duplicates found.")
